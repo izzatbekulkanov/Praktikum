@@ -3,8 +3,11 @@ from .views import *
 
 
 urlpatterns = [
-    path('', base, name='base'),
-    # path('services/', services, name='tour_services'),
+    path('', main, name='main'),
+    path('error404/', error404, name='error404'),
+    path('contact/', contact, name='contact'),
+    path('single_page/', single_page, name='single_page'),
+
     # path('tour_about/', tour_about, name='tour_about'),
     # path('tour_elements/<slug:slug>/', tour_elements, name='tour_elements'),
     # path('tour_detail/<slug:slug>/', tour_detail, name='tour_detail'),
