@@ -1,31 +1,30 @@
 from django.contrib import admin
 from .models import Contact, Category, News
 
-# Register your models here.
-
+# Contact admin
 @admin.register(Contact)
-class Contact(admin.ModelAdmin):
-    def get_ordering(self, request):
-        return ['id']
-
+class ContactAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email']
     search_fields = ['name', 'email']
-    list_display_links = ['email', 'name']
 
+# News admin
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    def get_ordering(self, request):
-        return ['id']
+    list_display = ('limited_title', 'category', 'status')
+    list_filter = ('status', 'category')
+    list_editable = ('category', 'status')  # Iltimos, to'g'ri tuple ko'rinishida yozing
+    search_fields = ('title', 'body')
+    ordering = ('publish_time',)
 
-    list_display = ['id', 'title', 'body']
-    search_fields = ['title', 'body']
-    list_display_links = ['title', 'body']
+    def limited_title(self, obj):
+        max_length = 50
+        if len(obj.title) <= max_length:
+            return obj.title
+        return f"{obj.title[:max_length-3]}..."
 
+    limited_title.short_description = 'Title'
+# Category admin
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    def get_ordering(self, request):
-        return ['id']
-
     list_display = ['name']
     search_fields = ['name']
-    list_display_links = ['name']

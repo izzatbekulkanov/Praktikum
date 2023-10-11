@@ -21,14 +21,14 @@ class News(models.Model):
     image = models.ImageField(upload_to='news/images')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     publish_time = models.DateTimeField(default=timezone.now)
-    createsd_time = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2,
                               choices=Status.choices,
                               default=Status.Draft
                               )
     class Meta:
-        ordering = ["-publish_time"]
+        ordering = ["publish_time"]
 
     def __str__(self):
         return self.title

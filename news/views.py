@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Contact
+from .models import Contact, News, Category
 from .forms import ContactForm
 from django.urls import reverse_lazy
 
@@ -8,7 +8,26 @@ from django.urls import reverse_lazy
 
 
 def main(request):
-    return render(request, 'base/main.html')
+    allNews = News.objects.all().order_by('-publish_time')
+    news = News.objects.all().order_by('-publish_time')[:5]
+    newsS = News.objects.filter(category__name='Sport').order_by('-publish_time')
+    newsT = News.objects.filter(category__name='Texnologiya').order_by('-publish_time')
+    newsX = News.objects.filter(category__name='Xorij').order_by('-publish_time')
+    newsM = News.objects.filter(category__name='Mahalliy').order_by('-publish_time')
+    categories = Category.objects.all()
+    photos = News.objects.all().order_by('-publish_time')[:9]
+
+    context = {
+        "allNews": allNews,
+        "newsS": newsS,
+        "news": news,
+        "newsT": newsT,
+        "newsX": newsX,
+        "newsM": newsM,
+        "categories": categories,
+        "photos": photos,
+    }
+    return render(request, 'base/main.html', context)
 def error404(request):
     return render(request, 'pages/404.html')
 
