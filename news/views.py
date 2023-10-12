@@ -16,6 +16,11 @@ def main(request):
     newsM = News.objects.filter(category__name='Mahalliy').order_by('-publish_time')
     categories = Category.objects.all()
     photos = News.objects.all().order_by('-publish_time')[:9]
+    lastNewsT = News.objects.filter(category__name='Texnologiya').latest('publish_time')
+    lastNewsX = News.objects.filter(category__name='Xorij').latest('publish_time')
+    lastNewsS = News.objects.filter(category__name='Sport').latest('publish_time')
+    lastNewsM = News.objects.filter(category__name='Mahalliy').latest('publish_time')
+    
 
     context = {
         "allNews": allNews,
@@ -26,6 +31,12 @@ def main(request):
         "newsM": newsM,
         "categories": categories,
         "photos": photos,
+        "lastNewsT": lastNewsT,
+        "lastNewsX": lastNewsX,
+        "lastNewsS": lastNewsS,
+        "lastNewsM": lastNewsM,
+        
+        
     }
     return render(request, 'base/main.html', context)
 def error404(request):
@@ -34,6 +45,7 @@ def error404(request):
 
 
 def contact(request):
+    allNews = News.objects.all().order_by('-publish_time')[:6]
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -43,6 +55,7 @@ def contact(request):
     else:
         form = ContactForm()
     context = {
+        "allNews": allNews,
         "form": form
     }
     return render(request, 'pages/contact.html', context)
