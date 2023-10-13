@@ -6,7 +6,7 @@ urlpatterns = [
     path('', main, name='main'),
     path('error404/', error404, name='error404'),
     path('contact/', contact, name='contact'),
-    path('single_page/<int:id>/', single_page, name='single_page'),
+    path('detail_page/<int:pk>/', Detail_page.as_view(), name='Detail_page'),
 
     # path('tour_about/', tour_about, name='tour_about'),
     # path('tour_elements/<slug:slug>/', tour_elements, name='tour_elements'),
