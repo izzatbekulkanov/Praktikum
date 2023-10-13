@@ -4,7 +4,7 @@ from .models import Category, News, Contact
 def contexts(request):
     # Bu o'zgaruvchi bilan templatlarga o'tkaziladigan ma'lumotlarni tayyorlash
     allNews = News.objects.all().order_by('-publish_time')
-    news = News.objects.all().order_by('-publish_time')[:5]
+    newsuz = News.objects.order_by('-publish_time')[:5]
     newsS = News.objects.filter(category__name='Sport').order_by('-publish_time')
     newsT = News.objects.filter(category__name='Texnologiya').order_by('-publish_time')
     newsX = News.objects.filter(category__name='Xorij').order_by('-publish_time')
@@ -21,7 +21,7 @@ def contexts(request):
     contexts = {
         "allNews": allNews,
         "newsS": newsS,
-        "news": news,
+        "newsuz": newsuz,
         "newsT": newsT,
         "newsX": newsX,
         "newsM": newsM,
