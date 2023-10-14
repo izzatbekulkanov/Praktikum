@@ -10,11 +10,12 @@ class ContactAdmin(admin.ModelAdmin):
 # News admin
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('limited_title', 'category', 'status')
+    list_display = ('limited_title', 'category', 'status')  # slug ni ko'rsating
     list_filter = ('status', 'category')
-    list_editable = ('category', 'status')  # Iltimos, to'g'ri tuple ko'rinishida yozing
+    list_editable = ('category', 'status')
     search_fields = ('title', 'body')
     ordering = ('publish_time',)
+    prepopulated_fields = {'slug': ('title',)}  # slugni title dan olish
 
     def limited_title(self, obj):
         max_length = 50
@@ -23,6 +24,7 @@ class NewsAdmin(admin.ModelAdmin):
         return f"{obj.title[:max_length-3]}..."
 
     limited_title.short_description = 'Title'
+
 # Category admin
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
