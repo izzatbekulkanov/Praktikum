@@ -1,10 +1,12 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category
 from .forms import ContactForm
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView, DeleteView, CreateView
 from django.views.generic.detail import DetailView
 from django.http import Http404
+from django.views import View
 
 # Create your views here.
 
@@ -50,14 +52,31 @@ class CustomDetailView(DetailView):
                 raise Http404("News does not exist")
         else:
             return None
-        
-        
 
+def category_detail(request, category_name):
+    # Kategoriyaga oid ma'lumotlarni olish uchun kerakli so'rovni yozing
+    category = Category.objects.get(name=category_name)
+    news_list = News.objects.filter(category=category)
+    context = {
+        "category_name": category_name,
+        "news_list": news_list,
+        "active_category": category_name,  # active_category o'zgaruvchisini aniqlang
+    }
+    return render(request, 'pages/news.html', context)
 
+class UpdateView(UpdateView):
+    model = News
+    template_name = 'pages/update.html'
+    context_object_name = 'news'
+    fields = ('title', 'body', 'image', 'status', 'category')
+    success_url = reverse_lazy('main')
 
-# def news_detail(request, slug):
-#     news = get_object_or_404(News, slug=slug)
-#     context = {
-#         "news": news
-#     }
-#     return render(request, 'pages/detail_page.html', context)
+class CreateView(CreateView):
+    model = News
+    template_name = 'pages/create.html'
+    context_object_name = 'news'
+    fields = ('title', 'body', 'image', 'status', 'category')
+class DeleteView(DeleteView):
+    model = News
+    template_name = 'pages/delete.html'
+    success_url = reverse_lazy('main')

@@ -30,9 +30,11 @@
                 {% endif %}
                 {% endfor %}
               </ul>
+              {% if user.is_superuser %}
               <h2>Iltimos malumotni tahrirlash yoki o'chirishda ehtiyot bo'ling</h2>
-              <button class="btn btn-red">Delete</button>
-              <button class="btn btn-yellow">Update</button>
+              <a href="{% url 'delete_page' news.slug %}"><button class="btn btn-red">Delete</button></a>
+              <a href="{% url 'update_page' news.slug %}"><button class="btn btn-yellow">Update</button></a>
+              {% endif %}
             </div>
             <div class="social_link">
               <ul class="sociallink_nav">
@@ -47,11 +49,13 @@
               <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
               <ul class="spost_nav wow fadeInDown animated">
                 {% for t in newsT %}
-                <li>
-                  <div class="media"> <a class="media-left" href="{{ t.get_absolute_url }}"> <img src="{{ t.image.url }}" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="{{ t.get_absolute_url }}">{{ t.title }}</a> </div>
-                  </div>
-                </li>
+                    {% if forloop.counter <= 6 %}
+                        <li>
+                            <div class="media"> <a class="media-left" href="{{ t.get_absolute_url }}"> <img src="{{ t.image.url }}" alt=""> </a>
+                                <div class="media-body"> <a class="catg_title" href="{{ t.get_absolute_url }}">{{ t.title|truncatewords:5 }}</a> </div>
+                            </div>
+                        </li>
+                    {% endif %}
                 {% endfor %}
               </ul>
             </div>

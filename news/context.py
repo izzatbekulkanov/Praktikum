@@ -1,3 +1,5 @@
+from unicodedata import category
+
 from .models import Category, News, Contact
 
 
@@ -11,6 +13,7 @@ def contexts(request):
     newsM = News.objects.filter(category__name='Mahalliy').order_by('-publish_time')
     categories = Category.objects.all()
     photos = News.objects.all().order_by('-publish_time')
+    # news_list = News.objects.filter(category=category)
     
     contexts = {
         "allNews": allNews,
@@ -20,6 +23,8 @@ def contexts(request):
         "newsX": newsX,
         "newsM": newsM,
         "categories": categories,
-        "photos": photos
+        "photos": photos,
+        # "news_list": news_list,
+        # "category": category
     }
     return contexts
