@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.http import Http404
+from django.utils.text import slugify
 
 
 # Create your models here.
