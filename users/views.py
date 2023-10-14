@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 
 # Create your views here.
@@ -28,6 +28,7 @@ def user_login(request):
             "form": form
         }
     return render(request, 'user/login.html', context)
+
 def user_logout(request):
     logout(request)
     return render(request, 'user/logout.html') # Sizning asosiy sahifangizga o'tkazadi, 'main' o'rniga o'zingizning sahifangizning nomini qo'yishingiz kerak

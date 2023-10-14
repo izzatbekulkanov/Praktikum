@@ -6,7 +6,9 @@
           <div class="header_top_left">
             <ul class="top_nav">
               <li><a href="{% url 'main' %}">Home</a></li>
+                {% if user.is_superuser %}
               <li><a href="{% url 'create_page' %}">Create News</a></li>
+                {% endif %}
               <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
           </div>
