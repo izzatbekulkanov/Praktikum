@@ -52,7 +52,7 @@
               {% for news in newsuz %}
               <li>
                 <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
-                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title | truncatewords:6 }}</a> </div>
                 </div>
               </li>
               {% endfor %}
@@ -189,7 +189,7 @@
               {% for news in newsT %}
               <li>
                 <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
-                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{news.title}} </a> </div>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{news.title | truncatewords:6}} </a> </div>
                 </div>
               </li>
               {% endfor %}
