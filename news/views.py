@@ -34,9 +34,29 @@ def contact(request):
     return render(request, 'pages/contact.html', context)
 
 
-# Xar bir malumot uchun klasdan foydalanilgan detail page
-class Detail_page(DetailView):
-    model = News
-    template_name = 'pages/detail_page.html'  # HTML-shablon nomi
-    context_object_name = 'news'  # Context o'zgaruvchi nomi
 
+
+def news_detail(request, slug):
+    news = get_object_or_404(News, slug=slug)
+    context = {
+        "news": news
+    }
+    return render(request, 'pages/detail_page.html', context)
+
+
+
+    # Xar bir malumot uchun klasdan foydalanilgan detail page
+# class Detail_page(DetailView):
+#     model = News
+#     template_name = 'pages/detail_page.html'  # HTML-shablon nomi
+#     context_object_name = 'news'  # Context o'zgaruvchi nomi
+    
+#     def get_object(self, queryset=None):
+#         slug = self.kwargs.get('slug')
+#         if slug:
+#             try:
+#                 return self.model.objects.get(slug=slug)
+#             except self.model.DoesNotExist:
+#                 raise Http404("News does not exist")
+#         else:
+#             return None

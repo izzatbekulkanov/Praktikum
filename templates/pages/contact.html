@@ -7,6 +7,9 @@
 <!--<div id="preloader">-->
 <!--  <div id="status">&nbsp;</div>-->
 <!--</div>-->
+<head>
+  <title>{% block title %}Contact{% endblock title %}</title>
+</head>
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 <div class="container">
 
@@ -34,8 +37,8 @@
             <ul class="spost_nav">
               {% for image in allNews %}
               <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{{ image.image.url }}"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title">{{ image.title }}</a> </div>
+                <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' image.id %}" class="media-left"> <img alt="" src="{{ image.image.url }}"> </a>
+                  <div class="media-body"> <a href="{% url 'Detail_page' image.id %}" class="catg_title">{{ image.title }}</a> </div>
                 </div>
               </li>
               {% endfor %}

@@ -9,8 +9,8 @@
       <div class="col-lg-12 col-md-12">
         <div class="latest_newsarea"> <span>Latest News</span>
           <ul id="ticker01" class="news_sticker">
-            {% for allnews in allNews %}
-            <li><a href="{% url 'Detail_page' allnews.id %}"><img src="{{ allnews.image.url }}" alt="">{{ allnews.title | truncatechars:12 }}</a></li>
+            {% for news in allNews %}
+            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
             {% endfor %}
           </ul>
           <div class="social_area">
@@ -33,11 +33,11 @@
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="slick_slider">
-          {% for allnews in allNews %}
-          <div class="single_iteam"> <a href="{% url 'Detail_page' allnews.id  %}"> <img src="{{ allnews.image.url }}" alt=""></a>
+          {% for news in allNews %}
+          <div class="single_iteam"> <a href="{{ news.get_absolute_url }}"> <img src="{{ news.image.url }}" alt=""></a>
             <div class="slider_article">
-              <h2><a class="slider_tittle" href="{% url 'Detail_page' allnews.id  %}">{{ allnews.title }}</a></h2>
-              <p>{{ allnews.body | truncatewords:12 }}</p>
+              <h2><a class="slider_tittle" href="{{ news.get_absolute_url }}">{{ news.title }}</a></h2>
+              <p>{{ news.body | truncatewords:12 }}</p>
             </div>
           </div>
           {% endfor %}
@@ -51,8 +51,8 @@
             <ul class="latest_postnav">
               {% for news in newsuz %}
               <li>
-                <div class="media"> <a href="{% url 'Detail_page' news.id  %}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
-                  <div class="media-body"> <a href="{% url 'Detail_page' news.id  %}" class="catg_title">{{ news.title }}</a> </div>
+                <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
                 </div>
               </li>
               {% endfor %}
@@ -72,22 +72,28 @@
             <div class="single_post_content_left">
               <ul class="business_catgnav  wow fadeInDown">
                 <li>
-                  <figure class="bsbig_fig"> <a href="{% url 'Detail_page' lastNewsS.id  %}" class="featured_img"> <img alt="" src="{{ lastNewsS.image.url }}"> <span class="overlay"></span> </a>
-                    <figcaption> <a href="{% url 'Detail_page' lastNewsS.id %}">{{ lastNewsT.title }}</a> </figcaption>
-                    <p>{{ lastNewsT.body | truncatewords:12 }}</p>
-                  </figure>
+                  {% for news in newsS %}
+                    {% if forloop.first %}
+                    <figure class="bsbig_fig"> <a href="{{ news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ news.image.url }}"> <span class="overlay"></span> </a>
+                      <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title }}</a> </figcaption>
+                      <p>{{ news.body | truncatewords:12 }}</p>
+                    </figure>
+                    {% endif %}
+                  {% endfor %}
                 </li>
               </ul>
             </div>
             <div class="single_post_content_right">
               <ul class="spost_nav">
-                {% for sport in newsS %}
+                {% for news in newsS %}
+                {% if not forloop.first %}
                 <li>
-                  <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' sport.id %}" class="media-left"> <img alt="" src="{{ sport.image.url }}"> </a>
-                    <div class="media-body"> <a href="{% url 'Detail_page' sport.id %}">{{ sport.title }} </a></div>
+                  <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                    <div class="media-body"> <a href="{{ news.get_absolute_url }}">{{ news.title }} </a></div>
                   </div>
                 </li>
-                {%  endfor%}
+                {% endif %}
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -97,19 +103,26 @@
                 <h2><span>Technologiya</span></h2>
                 <ul class="business_catgnav wow fadeInDown">
                   <li>
-                    <figure class="bsbig_fig"> <a href="{% url 'Detail_page' lastNewsT.id %}" class="featured_img"> <img alt="" src="{{ lastNewsT.image.url }}"> <span class="overlay"></span> </a>
-                      <figcaption> <a href="{% url 'Detail_page' lastNewsT.id %}">{{ lastNewsT.title }}</a> </figcaption>
-                      <p>{{ lastNewsT.body | truncatewords:12 }}</p>
+                    {% for news in newsT %}
+                    {% if forloop.first %}
+                    <figure class="bsbig_fig"> <a href="{{ news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ news.image.url }}"> <span class="overlay"></span> </a>
+                      <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title }}</a> </figcaption>
+                      <p>{{ news.body | truncatewords:12 }}</p>
                     </figure>
+                    {% endif %}
+                    {% endfor %}
+                    
                   </li>
                 </ul>
                 <ul class="spost_nav">
-                  {% for tech in newsT %}
+                  {% for news in newsT %}
+                  {% if not forloop.first %}
                   <li>
-                    <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' tech.id  %}" class="media-left"> <img alt="" src="{{ tech.image.url }}"> </a>
-                      <div class="media-body"> <a href="{% url 'Detail_page' tech.id  %}" class="catg_title">{{ tech.title }}</a> </div>
+                    <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                      <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title">{{ news.title }}</a> </div>
                     </div>
                   </li>
+                  {% endif %}
                   {% endfor %}
                 </ul>
               </div>
@@ -119,20 +132,26 @@
                 <h2><span>Xorij yangiliklari</span></h2>
                 <ul class="business_catgnav">
                   <li>
-                    <figure class="bsbig_fig wow fadeInDown"> <a href="{% url 'Detail_page' lastNewsX.id  %}" class="featured_img"> <img alt="" src="{{ lastNewsX.image.url }}"> <span class="overlay"></span> </a>
-                      <figcaption> <a href="{% url 'Detail_page' lastNewsX.id  %}">{{ lastNewsX.title }}</a> </figcaption>
-                      <p>{{ lastNewsX.body | truncatewords:12 }}</p>
+                    {% for news in newsX %}
+                    {% if forloop.first %}
+                    <figure class="bsbig_fig wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ news.image.url }}"> <span class="overlay"></span> </a>
+                      <figcaption> <a href="{{ news.get_absolute_url }}">{{ news.title }}</a> </figcaption>
+                      <p>{{ s.body | truncatewords:12 }}</p>
                     </figure>
+                    {% endif %}
+                    {% endfor %}
                   </li>
                 </ul>
                 <ul class="spost_nav">
 
-                  {% for xorij in newsX %}
+                  {% for news in newsX %}
+                  {% if not forloop.first %}
                   <li>
-                    <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' xorij.id  %}" class="media-left"> <img alt="{{ lastNewsX.image.url }}" src="{{ xorij.image.url }}"> </a>
-                      <div class="media-body"> <a href="{% url 'Detail_page' xorij.id  %}" class="catg_title"> {{ xorij.title }}</a> </div>
+                    <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="{{ news.image.url }}" src="{{ news.image.url }}"> </a>
+                      <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a> </div>
                     </div>
                   </li>
+                  {% endif %}
                   {% endfor %}
 
                 </ul>
@@ -143,12 +162,18 @@
             <h2><span>Photography</span></h2>
             <ul class="photograph_nav  wow fadeInDown">
 
-              {% for photos in photos %}
+              {% for news in photos %}
+              {% if forloop.counter <= 6 %}
               <li>
                 <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="{% url 'Detail_page' photos.id  %}" title="Photography Ttile 1"> <img src="{{ photos.image.url }}" alt=""/></a> </figure>
+                  <figure class="effect-layla"> 
+                    <a class="fancybox-buttons" data-fancybox-group="button" href="{{ news.get_absolute_url }}" title="Photography Ttile 1"> 
+                      <img src="{{ news.image.url }}" alt=""/>
+                    </a> 
+                  </figure>
                 </div>
               </li>
+              {% endif %}
               {% endfor %}
 
             </ul>
@@ -161,10 +186,10 @@
           <div class="single_sidebar">
             <h2><span>Texnologiya yangiliklari</span></h2>
             <ul class="spost_nav ">
-              {% for tech in newsT %}
+              {% for news in newsT %}
               <li>
-                <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' tech.id  %}" class="media-left"> <img alt="" src="{{ tech.image.url }}"> </a>
-                  <div class="media-body"> <a href="{% url 'Detail_page' tech.id  %}" class="catg_title"> {{tech.title}} </a> </div>
+                <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{news.title}} </a> </div>
                 </div>
               </li>
               {% endfor %}

@@ -48,8 +48,8 @@
               <ul class="spost_nav wow fadeInDown animated">
                 {% for t in newsT %}
                 <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="{{ t.image.url }}" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html">{{ t.title }}</a> </div>
+                  <div class="media"> <a class="media-left" href="{% url 'Detail_page' t.id %}"> <img src="{{ t.image.url }}" alt=""> </a>
+                    <div class="media-body"> <a class="catg_title" href="{% url 'Detail_page' t.id %}">{{ t.title }}</a> </div>
                   </div>
                 </li>
                 {% endfor %}
@@ -65,11 +65,13 @@
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
               {% for n in newsuz %}
+              {% if n.id != news.id %}
               <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{{ n.image.url }}"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title">{{ n.title }}</a> </div>
+                <div class="media wow fadeInDown"> <a href="{% url 'Detail_page' n.id %}" class="media-left"> <img alt="" src="{{ n.image.url }}"> </a>
+                  <div class="media-body"> <a href="{% url 'Detail_page' n.id %}" class="catg_title">{{ n.title }}</a> </div>
                 </div>
               </li>
+              {% endif %}
               {% endfor %}
             </ul>
           </div>
@@ -110,10 +112,14 @@
             </div>
           </div>
           <div class="single_sidebar wow fadeInDown">
-            <h2><span>Sponsor</span></h2>
-            <a class="sideAdd" href="#"><img src="{{ lastNewsT.image.url }}" alt=""></a> </div>
-          <div class="single_sidebar wow fadeInDown">
-            <h2><span>{{ lastNewsT.category }}</span></h2>
+          {% for news in newsuz %}
+              {% if forloop.first %}
+                  <h2><span>Sponsor</span></h2>
+                      <a class="sideAdd" href="#"><img src="{{ news.image.url }}" alt=""></a> </div>
+                  <div class="single_sidebar wow fadeInDown">
+                      <h2><span>{{ news.category }}</span></h2>
+              {% endif %}
+          {% endfor %}
             <select class="catgArchive">
               <option>Select Category</option>
               {% for category in categories %}
@@ -138,8 +144,8 @@
       <div class="col-lg-12 col-md-12">
         <div class="latest_newsarea"> <span>Latest News</span>
           <ul id="ticker01" class="news_sticker">
-            {% for allnews in allNews %}
-            <li><a href="#"><img src="{{ allnews.image.url }}" alt="">{{ allnews.title | truncatechars:12 }}</a></li>
+            {% for news in allNews %}
+            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
             {% endfor %}
           </ul>
           <div class="social_area">
