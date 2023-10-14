@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.http import Http404
 
 
 # Create your models here.
@@ -28,6 +29,12 @@ class News(models.Model):
                               choices=Status.choices,
                               default=Status.Draft
                               )
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:  # Agar slug bo'sh bo'lsa
+            self.slug = slugify(self.title)  # title dan slug yaratish
+        super(News, self).save(*args, **kwargs)
+        
     class Meta:
         ordering = ["publish_time"]
 
@@ -35,11 +42,8 @@ class News(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("Detail_page", args=[str(self.id)])
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(News, self).save(*args, **kwargs)
+        return reverse("Detail_page", args=[str(self.slug)])
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=140)

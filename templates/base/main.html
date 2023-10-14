@@ -10,7 +10,7 @@
         <div class="latest_newsarea"> <span>Latest News</span>
           <ul id="ticker01" class="news_sticker">
             {% for news in allNews %}
-            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
+            <li><a href="{{news.get_absolute_url}}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
             {% endfor %}
           </ul>
           <div class="social_area">

@@ -4,6 +4,7 @@ from .models import Contact, News, Category
 from .forms import ContactForm
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
+from django.http import Http404
 
 # Create your views here.
 
@@ -35,28 +36,28 @@ def contact(request):
 
 
 
+class CustomDetailView(DetailView):
+    model = News
+    template_name = 'pages/detail_page.html'
+    context_object_name = 'news'
 
-def news_detail(request, slug):
-    news = get_object_or_404(News, slug=slug)
-    context = {
-        "news": news
-    }
-    return render(request, 'pages/detail_page.html', context)
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get('slug')
+        if slug:
+            try:
+                return self.model.objects.get(slug=slug)
+            except self.model.DoesNotExist:
+                raise Http404("News does not exist")
+        else:
+            return None
+        
+        
 
 
 
-    # Xar bir malumot uchun klasdan foydalanilgan detail page
-# class Detail_page(DetailView):
-#     model = News
-#     template_name = 'pages/detail_page.html'  # HTML-shablon nomi
-#     context_object_name = 'news'  # Context o'zgaruvchi nomi
-    
-#     def get_object(self, queryset=None):
-#         slug = self.kwargs.get('slug')
-#         if slug:
-#             try:
-#                 return self.model.objects.get(slug=slug)
-#             except self.model.DoesNotExist:
-#                 raise Http404("News does not exist")
-#         else:
-#             return None
+# def news_detail(request, slug):
+#     news = get_object_or_404(News, slug=slug)
+#     context = {
+#         "news": news
+#     }
+#     return render(request, 'pages/detail_page.html', context)
