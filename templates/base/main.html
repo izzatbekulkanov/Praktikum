@@ -166,10 +166,10 @@
               {% if forloop.counter <= 6 %}
               <li>
                 <div class="photo_grid">
-                  <figure class="effect-layla"> 
-                    <a class="fancybox-buttons" data-fancybox-group="button" href="{{ news.get_absolute_url }}" title="Photography Ttile 1"> 
-                      <img src="{{ news.image.url }}" alt=""/>
-                    </a> 
+                  <figure class="effect-layla">
+                      <a class="fancybox-buttons" data-fancybox-group="button" href="{{ news.get_absolute_url }}" title="Photography tile 1">
+                          <img src="{{ news.image.url }}" alt="" class="img-center"/>
+                      </a>
                   </figure>
                 </div>
               </li>
@@ -229,10 +229,14 @@
             </div>
           </div>
           <div class="single_sidebar wow fadeInDown">
+            {% for news in allNews %}
+            {% if forloop.first %}
             <h2><span>Sponsor</span></h2>
-            <a class="sideAdd" href="#"><img src="{% static '{{ lastNewsT.image.url }}' %}" alt=""></a> </div>
+            <a class="sideAdd" href="#"><img src="{{ news.image.url }}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
-            <h2><span>{{ lastNewsS.category }}</span></h2>
+            <h2><span>{{ news.category }}</span></h2>
+            {% endif %}
+            {% endfor %}
             <select class="catgArchive">
               <option>Select Category</option>
 

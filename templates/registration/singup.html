@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}Kirish / Ro'yhatdan o'tish{% endblock title %}
+    </title>
+    <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Kirish / Ro'yhatdan o'tish shakli</h2>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form method="POST"> {% csrf_token %}
+                <h1>Ro'yhatdan o'tish</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" class="social"><i class="fa fa-google" aria-hidden="true"></i></a>
+                    <a href="#" class="social"><i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+                <span>yoki ro'yxatdan o'tish uchun elektron pochtangizdan foydalaning</span>
+                <input type="text" placeholder="Name" name="name"/>
+                <input type="email" placeholder="Email" name="email"/>
+                <input type="password" placeholder="Password" name="password"/>
+                <button type="submit">Ro'yhatdan o'tish</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form method="POST">{% csrf_token %}
+                <h1>Kirish</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" class="social"><i class="fa fa-google" aria-hidden="true"></i></a>
+                    <a href="#" class="social"><i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+                <span>yoki hisobingizdan foydalaning</span>
+                <input type="text" placeholder="username"  name="username"/>
+                <input type="password" placeholder="Password" name="password"/>
+                <a href="#">Parolingiz esingizdan chiqdimi?</a>
+                <button type="submit">Kirish</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Salom do'stim !!!</h1>
+                    <p>Shaxsiy ma'lumotlaringizni kiriting va biz bilan sayohatni boshlang</p>
+                    <button class="ghost" id="signUp">Ro'yhatdan o'tish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Bosh sahifaga qaytish uchun bu yerni bosing
+            <a target="_blank" href="{% url 'main' %}">here</a>.
+        </p>
+    </footer>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="{% static 'js/login.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

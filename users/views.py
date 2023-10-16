@@ -1,34 +1,26 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from .forms import CustomUserCreationForm
+def custom_login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('some_redirect_url')  # Kirish qilingan foydalanuvchi bosh sahifaga yo'naltiriladi
 
-# Create your views here.
-def user_login(request):
-    if request.method == "POST":
-        form = LoginForm(request.POST)
+    return render(request, 'registration/login.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            print(data)
-            user = authenticate(request,
-                                username=data['username'],
-                                password=data['password'])
-            print(user.password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse("Muvaffaqiyatli login amalga oshirildi")
-                else:
-                    return HttpResponse("Profilingiz faol holatda emas")
-            else:
-                return HttpResponse("Login yoki parol hato")
-    else:
-        form = LoginForm()
-        context = {
-            "form": form
-        }
-    return render(request, 'user/login.html', context)
+            user = form.save()
+            login(request, user)
+            return redirect('some_redirect_url')  # Ro'yhatdan o'tgan foydalanuvchi bosh sahifaga yo'naltiriladi
 
-def user_logout(request):
-    logout(request)
-    return render(request, 'user/logout.html') # Sizning asosiy sahifangizga o'tkazadi, 'main' o'rniga o'zingizning sahifangizning nomini qo'yishingiz kerak
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
