@@ -34,6 +34,13 @@
               </a>
             </p>
             {% endif %}
+              {% if user.is_authenticated %}
+            <p>
+              <a href="{% url 'dashboard' %}">
+                  <p class="btn btn-success mt-2">Profile</p>
+              </a>
+            </p>
+            {% endif %}
           </div>
 
         </div>

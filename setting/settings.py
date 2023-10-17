@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user'
+    'users',
     'news',
 ]
 
-AUTH_USER_MODEL = 'user.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,13 +147,15 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Library",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "books/img/logo.png",
+    "site_logo": "{% static 'images/favicon.png' %}",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": None,
+    "login_logo": "https://namdu.uz/img/pic/logo.png",
 
     # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": None,
+    "login_logo_dark": "https://namdu.uz/img/pic/logo.png",
+
+
 
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
@@ -275,7 +277,9 @@ JAZZMIN_SETTINGS = {
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     # Add a language dropdown into the admin
     # "language_chooser": True,
-}
 
+}
 LOGIN_REDIRECT_URL = 'main'
 LOGOUT_REDIRECT_URL = 'main'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
