@@ -87,7 +87,44 @@
     <div class="section"></div>
     <div class="section"></div>
   </main>
+{% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <script>
+                    Swal.fire({
+                        customClass: {
+                            title: 'swal2-title'
+                        },
+                        position: 'bottom-end',
+                        // center
+                        icon: '{{message.tags}}',
+                        title: '{{message}}',
+                        showConfirmButton: false,
+                        timer: 2300
+                    })
+                </script>
+            {% else %}
+                <script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
 
+                    Toast.fire({
+                        icon: '{{message.tags}}',
+                        title: '{{message}}'
+                    })
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 </body>
