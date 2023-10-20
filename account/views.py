@@ -44,6 +44,10 @@ def user_dashboard(request):
     context = {'user': user}
     return render(request, 'users/dashboard/main_dashboard.html', context)
 
+def recent(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'users/dashboard/recent.html', context)
 
 def user_register(request):
     if request.method == "POST":
@@ -69,23 +73,6 @@ def singup_done(request):
     user_form = UserRegistrationForm()
     context = {'user_form': user_form}
     return render(request, 'users/signup_done.html', context)
-
-
-# def edit_user(request):
-#     if request.method == "POST":
-#         user_form = UserEditForm(data=request.user, instance=request.user)
-#         profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#     else:
-#         user_form = UserEditForm(instance=request.user)
-#         profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST)
-#     context = {
-#         "user_form": user_form,
-#         "profile_form": profile_form
-#     }
-#     return render(request, 'users/edit_user.html', context)
 
 def edit_user(request):
     user = request.user
