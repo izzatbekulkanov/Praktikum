@@ -27,8 +27,5 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image', 'data_of_birth']
-        # widgets = {
-        #     'image': forms.FileInput(attrs={'class': 'form-control'}),
-        # }
 
 
