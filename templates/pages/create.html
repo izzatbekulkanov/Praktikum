@@ -42,15 +42,34 @@
         <div class="left_content">
             <!-- Bu yerga edit create delete kodlari yoziladi -->
             <h2 class="text-center">Yangilik qo'shish</h2>
-          <form method="post" enctype="multipart/form-data">
-            {%  csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-warning ml-2">Saqlash</button>
-          </form>
+<!--            <form method="POST" enctype="multipart/form-data" class="contact_form">-->
+<!--                {% csrf_token %}-->
+<!--                <input class="form-control" type="text" placeholder="Title*" name="title">-->
+<!--                <p id="slug" class="form-control" readonly aria-placeholder="Slug"></p>-->
+<!--                <textarea class="form-control" cols="30" rows="10" placeholder="Body*" name="body"></textarea>-->
+<!--                <input class="form-control mb-3" type="file" name="image">-->
+<!--                <select class="form-control mb-3" name="category">-->
+<!--                    &lt;!&ndash; Bu yerdan kategoriyalar ro'yxatini olishingiz mumkin &ndash;&gt;-->
+<!--                    {% for category in categories %}-->
+<!--                        <option value="{{ category.name }}">{{ category.name }}</option>-->
+<!--                    {% endfor %}-->
+
+<!--                </select>-->
+<!--                <select class="form-control" name="status">-->
+<!--                    <option value="DF">Draft</option>-->
+<!--                    <option value="PB">Published</option>-->
+<!--                </select>-->
+<!--                <button type="submit" class="btn btn-warning">Saqlash</button>-->
+<!--            </form>-->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Saqlash</button>
+            </form>
 
             <!--/ Bu yerga edit create delete kodlari yoziladi -->
         </div>
-      </div>
+    </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">

@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import LoginForm, UserRegistrationForm, ProfileEditForm, UserEditForm
@@ -59,7 +57,7 @@ def user_register(request):
             )
             new_user.save()
             Profile.objects.create(user=new_user)
-            context = {
+            context= {
                 "new_user": new_user
             }
             return render(request, 'users/signup_done.html', context)
@@ -74,6 +72,7 @@ def singup_done(request):
     context = {'user_form': user_form}
     return render(request, 'users/signup_done.html', context)
 
+@login_required
 def edit_user(request):
     user = request.user
     try:

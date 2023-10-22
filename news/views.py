@@ -3,9 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category
 from .forms import ContactForm
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, DeleteView, CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.http import Http404
+from setting.custom_permissions import OnlyLoggedSuperUser
 from django.views import View
 
 # Create your views here.
@@ -71,11 +72,19 @@ class UpdateView(UpdateView):
     fields = ('title', 'body', 'image', 'status', 'category')
     success_url = reverse_lazy('main')
 
-class CreateView(CreateView):
-    model = News
+class CreateView(OnlyLoggedSuperUser, CreateView):
+    model = News  # Ma'lumotlarni saqlash uchun News modelini foydalanamiz
     template_name = 'pages/create.html'
     context_object_name = 'news'
     fields = ('title', 'body', 'image', 'status', 'category')
+
+    def form_valid(self, form):
+        news = form.save(commit=False)
+        news.slug = slugify(news.title)
+        news.created_time = timezone.now()
+        news.updated_time = timezone.now()
+        news.save()
+        return HttpResponseRedirect(news.get_absolute_url())
 class DeleteView(DeleteView):
     model = News
     template_name = 'pages/delete.html'

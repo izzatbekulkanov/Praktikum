@@ -56,18 +56,27 @@
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <div class="form-group">
-                            <input type="date" class="form-control" name="date_of_birth" value="{{ request.user.profile.data_of_birth|date:'d-m-Y' }}">
+                            <input type="date" class="form-control" name="data_of_birth" value="{{ request.user.profile.data_of_birth | date:'Y/m/d' }}">
                         </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Joriy tug'ilgan sanangiz</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <div class="form-group">
+                            <p class="form-control"> {{ request.user.profile.data_of_birth | date:'m/d/Y' }}</p>
+                        </div>
+                    </div>
+                <hr>
+                <div class="row ml-1">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Profile Image</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <div class="form-group">
-                            <input type="file" class="form-control-file" name="profile_image">
+                            <input type="file" class="form-control-file" name="image">
                         </div>
                     </div>
                 </div>
