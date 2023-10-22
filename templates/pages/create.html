@@ -40,34 +40,59 @@
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
-            <!-- Bu yerga edit create delete kodlari yoziladi -->
             <h2 class="text-center">Yangilik qo'shish</h2>
-<!--            <form method="POST" enctype="multipart/form-data" class="contact_form">-->
-<!--                {% csrf_token %}-->
-<!--                <input class="form-control" type="text" placeholder="Title*" name="title">-->
-<!--                <p id="slug" class="form-control" readonly aria-placeholder="Slug"></p>-->
-<!--                <textarea class="form-control" cols="30" rows="10" placeholder="Body*" name="body"></textarea>-->
-<!--                <input class="form-control mb-3" type="file" name="image">-->
-<!--                <select class="form-control mb-3" name="category">-->
-<!--                    &lt;!&ndash; Bu yerdan kategoriyalar ro'yxatini olishingiz mumkin &ndash;&gt;-->
-<!--                    {% for category in categories %}-->
-<!--                        <option value="{{ category.name }}">{{ category.name }}</option>-->
-<!--                    {% endfor %}-->
-
-<!--                </select>-->
-<!--                <select class="form-control" name="status">-->
-<!--                    <option value="DF">Draft</option>-->
-<!--                    <option value="PB">Published</option>-->
-<!--                </select>-->
-<!--                <button type="submit" class="btn btn-warning">Saqlash</button>-->
-<!--            </form>-->
-            <form method="POST" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" class="card">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Saqlash</button>
+                <div class="card-body">
+
+                    {{ form.title.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}">Title:</label>
+                        <input type="text" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}" class="form-control">
+                    </div>
+
+                    {{ form.slug.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.slug.id_for_label }}">Slug:</label>
+                        {{ form.slug }}
+                    </div>
+
+                    {{ form.body.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.body.id_for_label }}">Body:</label>
+                        <textarea class="form-control" name="{{ form.body.name }}" id="{{ form.body.id_for_label }}" rows="5"></textarea>
+                    </div>
+
+                    {{ form.image.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.image.id_for_label }}">Image:</label>
+                        <input type="file" class="form-control-file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}">
+                    </div>
+
+                    {{ form.category.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category:</label>
+                        <select class="form-control" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+                            <option value="">Select a category</option>
+                            {% for category in form.category.field.queryset %}
+                                <option value="{{ category.pk }}" {% if category.pk == form.category.value %}selected{% endif %}>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {{ form.status.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">Status:</label>
+                        <select class="form-control" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}">
+                            <option value="DF" {% if form.status.value == 'DF' %}selected{% endif %}>Draft</option>
+                            <option value="PB" {% if form.status.value == 'PB' %}selected{% endif %}>Published</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Saqlash</button>
             </form>
 
-            <!--/ Bu yerga edit create delete kodlari yoziladi -->
         </div>
     </div>
       <div class="col-lg-4 col-md-4 col-sm-4">

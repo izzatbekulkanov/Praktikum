@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category
 from .forms import ContactForm
@@ -7,6 +7,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.http import Http404
 from setting.custom_permissions import OnlyLoggedSuperUser
+from django.utils.text import slugify
+from django.utils import timezone
 from django.views import View
 
 # Create your views here.
@@ -73,7 +75,7 @@ class UpdateView(UpdateView):
     success_url = reverse_lazy('main')
 
 class CreateView(OnlyLoggedSuperUser, CreateView):
-    model = News  # Ma'lumotlarni saqlash uchun News modelini foydalanamiz
+    model = News
     template_name = 'pages/create.html'
     context_object_name = 'news'
     fields = ('title', 'body', 'image', 'status', 'category')
