@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category
-from .forms import ContactForm
+from .forms import ContactForm, CategoryForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -87,7 +87,28 @@ class CreateView(OnlyLoggedSuperUser, CreateView):
         news.updated_time = timezone.now()
         news.save()
         return HttpResponseRedirect(news.get_absolute_url())
+def category_list(request):
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            category = Category.objects.create(name=name)
+            category.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+    return render(request, 'pages/category.html', {'categories': categories, 'form': form})
 class DeleteView(DeleteView):
-    model = News
-    template_name = 'pages/delete.html'
-    success_url = reverse_lazy('main')
+    model = News.category
+    template_name = 'pages/category.html'
+    success_url = reverse_lazy('create_page')
+
+def delete_category(request, category_id):
+    try:
+        category = Category.objects.get(pk=category_id)
+        category.delete()
+    except Category.DoesNotExist:
+        # Bunday kategoriya topilmadi
+        pass
+    return redirect('category_list')

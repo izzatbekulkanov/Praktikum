@@ -9,6 +9,9 @@
                 {% if user.is_superuser %}
               <li><a href="{% url 'create_page' %}">Create News</a></li>
                 {% endif %}
+                {% if user.is_superuser %}
+              <li><a href="{% url 'category_list' %}">Create Category</a></li>
+                {% endif %}
               <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
           </div>

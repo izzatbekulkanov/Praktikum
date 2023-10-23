@@ -3,14 +3,13 @@
 
 {% block content %}
 <head>
-  <title>{% block title %}Error{% endblock title %}</title>
+  <title>{% block title %}Create news{% endblock title %}</title>
 </head>
 <!--<div id="preloader">-->
 <!--  <div id="status">&nbsp;</div>-->
 <!--</div>-->
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 <div class="container">
-
   <section id="newsSection">
     <div class="row">
       <div class="col-lg-12 col-md-12">
@@ -51,6 +50,10 @@
                         <input type="text" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}" class="form-control">
                     </div>
 
+                    <div class="form-group">
+                        <label>SLUG:</label>
+                        <p id="slug" class="form-control"></p>
+                    </div>
 <!--                    {{ form.slug.errors }}-->
 <!--                    <div class="form-group">-->
 <!--                        <label for="{{ form.slug.id_for_label }}">Slug:</label>-->
@@ -84,8 +87,8 @@
                     <div class="form-group">
                         <label for="{{ form.status.id_for_label }}">Status:</label>
                         <select class="form-control" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}">
-                            <option value="DF" {% if form.status.value =='DF' %}selected{% endif %}>Draft</option>
-                            <option value="PB" {% if form.status.value =='PB' %}selected{% endif %}>Published</option>
+                            <option value="DF" {% if form.status.value == 'DF' %}selected{% endif %}>Draft</option>
+                            <option value="PB" {% if form.status.value == 'PB' %}selected{% endif %}>Published</option>
                         </select>
                     </div>
                 </div>
