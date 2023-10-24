@@ -60,14 +60,20 @@
         <div class="header_top">
           <div class="header_top_left">
             <ul class="top_nav">
-              <li><a href="{% url 'main' %}">Home</a></li>
+                <li><a href="{% url 'main' %}">Home</a></li>
                 {% if user.is_superuser %}
-              <li><a href="{% url 'create_page' %}">Create News</a></li>
+                <li><a href="{% url 'create_page' %}">Create News</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-              <li><a href="{% url 'category_list' %}">Create Category</a></li>
+                <li><a href="{% url 'category_list' %}">Create Category</a></li>
                 {% endif %}
-              <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li>
+                    <form method="get">
+                        <input type="text" name="q" placeholder="Search">
+                        <button type="submit">Search</button>
+                    </form>
+                </li>
             </ul>
           </div>
           <div class="header_top_right">

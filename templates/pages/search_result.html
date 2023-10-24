@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/searchResult.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+<section id="contentSection">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="row text-center">
+                    <div class="col-md-8 offset-md-2">
+                        <h3>Qidiruv natijalari</h3>
+                        <hr class="invisible small">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="v-heading-v2">
+                            <h4 class="v-search-result-count">About 18,580 results</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix mt-40">
+                    <ul class="xsearch-items">
+                        {% for result in results %}
+                        <li class="search-item">
+                            <div class="search-item-img">
+                                <a href="#">
+                                    <img src="{{ result.image.url }}" width="70" height="70">
+                                </a>
+                            </div>
+                            <div class="search-item-content">
+                                <h3 class="search-item-caption"><a href="#">{{ result.title }}</a></h3>
+                                <div class="search-item-meta mb-15">
+                                    <ul class="list-inline">
+                                        <li class="time">{{ result.published_time }}</li>
+                                        <li><a href="#">0 Comments</a></li>
+<!--                                        <li class="pr-0">in</li>-->
+<!--                                        <li class="pl-0"><a href="#">Design</a></li>-->
+                                    </ul>
+                                </div>
+                                <div>
+                                    {{ result.body | truncatewords:20 }}
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="clearfix pl-90">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-double-left"></i> </a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">..</a></li>
+                                <li class="page-item"><a class="page-link" href="#">20</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-double-right"></i> </a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="clearfix pull-right">
+                            <span class="o-7">Page 1 of 8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

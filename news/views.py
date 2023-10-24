@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category, Comment
 from .forms import ContactForm, CategoryForm, CommentForm
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.views.generic.detail import DetailView
 from django.http import Http404
 from setting.custom_permissions import OnlyLoggedSuperUser
@@ -50,20 +50,12 @@ def custom_detail_view(request, slug):
             new_comment.user = request.user
             new_comment.save()
 
+            # Redirect to the same page to clear the form and show the new comment
+            return redirect('Detail_page', slug=slug)
 
-            # Oldin yozilgan barcha kommentariyalarni olish
-            all_comments = Comment.objects.filter(news=news, active=True)
-
-            context = {
-                'news': news,
-                'comments': all_comments,
-                'new_comment': new_comment,
-                'comment_form': CommentForm(),
-            }
-            comment_form = CommentForm()
-            return render(request, 'pages/detail_page.html', context)
     else:
         comment_form = CommentForm()
+
     context = {
         'news': news,
         'comments': comments,
@@ -124,3 +116,7 @@ def delete_category(request, category_id):
         # Bunday kategoriya topilmadi
         pass
     return redirect('category_list')
+class SearchResultList(ListView):
+    model = News
+    template_name = 'pages/search_result.html'
+    context_object_name = 'results'

@@ -39,24 +39,37 @@
               {% endif %}
             </div>
             <div class="social_link">
-              <ul class="">
-                {% for comment in comments %}
-                <li><p>
-                  {{ comment.user.first_name }} {{ comment.user.last_name }} <i class="fa fa-clock-o" aria-hidden="true"></i> {{ comment.created_time| date:'Y-m-d h:m'}}
-                </p>
-                <p>
-                  {{ comment.body }}
-                </p></li>
-                {% endfor %}
+              <ul class="list-group">
+                  {% for comment in comments %}
+                  <li class="list-group-item">
+                      <p>
+                          {{ comment.user.first_name }} {{ comment.user.last_name }} <i class="fa fa-clock-o" aria-hidden="true"></i> {{ comment.created_time|date:'Y-m-d H:i'}}
+                      </p>
+                      <p>
+                          {{ comment.body }}
+                      </p>
+                  </li>
+                  {% endfor %}
               </ul>
-            </div>
-            <div class="social_link">
-              <form method="POST"  style="margin-top: 1.3rem">
+          </div>
+
+          <div class="social_link">
+              <form method="POST" style="margin-top: 1.3rem">
                   {% csrf_token %}
-                  {{ comment_form.as_p }}
-                  <button type="submit" class="submit-button">Izoh qoldirish</button>
+                  <label for="comment_in">Izoh qoldiring</label>
+                  <textarea class="form-control" name="body" id="comment_in" cols="30" rows="5"></textarea>
+                {% if request.user.is_authenticated %}
+                  <button type="submit" class="btn btn-primary submit-button">Izoh qoldirish</button>
+                {% else %}
+                <a href="{% url 'login' %}">
+                  <div class="btn btn-primary submit-button">
+                    Tizimga kirish
+                  </div>
+                </a>
+                {% endif %}
               </form>
-            </div>
+          </div>
+
             <div class="related_post">
               <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
               <ul class="spost_nav wow fadeInDown animated">
