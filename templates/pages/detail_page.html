@@ -2,12 +2,14 @@
 {% load static %}
 
 {% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/comment.css' %}">
+</head>
 
 <!--<div id="preloader">-->
 <!--  <div id="status">&nbsp;</div>-->
 <!--</div>-->
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-<div class="container">
 <section id="contentSection">
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
@@ -37,13 +39,23 @@
               {% endif %}
             </div>
             <div class="social_link">
-              <ul class="sociallink_nav">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+              <ul class="">
+                {% for comment in comments %}
+                <li><p>
+                  {{ comment.user.first_name }} {{ comment.user.last_name }} <i class="fa fa-clock-o" aria-hidden="true"></i> {{ comment.created_time| date:'Y-m-d h:m'}}
+                </p>
+                <p>
+                  {{ comment.body }}
+                </p></li>
+                {% endfor %}
               </ul>
+            </div>
+            <div class="social_link">
+              <form method="POST"  style="margin-top: 1.3rem">
+                  {% csrf_token %}
+                  {{ comment_form.as_p }}
+                  <button type="submit" class="submit-button">Izoh qoldirish</button>
+              </form>
             </div>
             <div class="related_post">
               <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
@@ -164,6 +176,4 @@
       </div>
     </div>
   </section>
-
-</div>
 {% endblock content %}

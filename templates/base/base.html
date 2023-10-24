@@ -35,10 +35,14 @@
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 <div class="container">
   {% include 'base/header.html' %}
-
+</div>
+<div class="container">
+  <div class="mr-3">
   {% block content %}
   {% endblock content %}
-
+  </div>
+</div>
+<div class="container">
   {% include 'base/footer.html' %}
 </div>
 
@@ -53,6 +57,14 @@
         document.getElementById('slug').textContent = slug;
     });
 </script>
+<script>
+document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+    const fileName = e.target.files[0].name;
+    const label = document.querySelector('.custom-file-label');
+    label.textContent = fileName;
+});
+</script>
+
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/wow.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>

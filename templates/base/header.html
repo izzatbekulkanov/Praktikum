@@ -1,4 +1,59 @@
 {% load static %}
+<head>
+    <style>
+
+
+        .btn {
+          font-size: 17px;
+          background: transparent;
+          border: none;
+          padding: 1em 1.5em;
+          color: #ffedd3;
+          text-transform: uppercase;
+          position: relative;
+          transition: .5s ease;
+          cursor: pointer;
+        }
+
+        .btn::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 2px;
+          width: 0;
+          background-color: #ffc506;
+          transition: .5s ease;
+        }
+
+        .btn:hover {
+          color: #1e1e2b;
+          transition-delay: .5s;
+        }
+
+        .btn:hover::before {
+          width: 100%;
+        }
+
+        .btn::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 0;
+          width: 100%;
+          background-color: #ffc506;
+          transition: .4s ease;
+          z-index: -1;
+        }
+
+        .btn:hover::after {
+          height: 100%;
+          transition-delay: 0.4s;
+          color: aliceblue;
+        }
+    </style>
+</head>
 <header id="header">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
@@ -19,11 +74,11 @@
             <p>{% now "jS F Y H:i" %}</p>
 
             {% if not user.is_authenticated %}
-            <p>
               <a href="{% url 'login' %}">
-                  <p class="btn btn-primary mt-2">Login or register</p>
+                  <button class="btn">
+                        Login or register
+                    </button>
               </a>
-            </p>
 <!--            <p>-->
 <!--              <a href="#">-->
 <!--                  <p class="btn btn-success mt-2">Register</p>-->
@@ -31,18 +86,18 @@
 <!--            </p>-->
             {% endif %}
             {% if user.is_authenticated %}
-            <p>
               <a href="{% url 'logout' %}">
-                  <p class="btn btn-success mt-2">Logout</p>
+                  <button class="btn">
+                        Logout
+                    </button>
               </a>
-            </p>
             {% endif %}
               {% if user.is_authenticated %}
-            <p>
               <a href="{% url 'dashboard' %}">
-                  <p class="btn btn-success mt-2">Profile</p>
+                  <button class="btn">
+                        Dashboard
+                    </button>
               </a>
-            </p>
             {% endif %}
           </div>
 
@@ -52,7 +107,7 @@
         <div class="header_bottom">
           <div class="logo_area">
               <a href="/full/path/to/base.html" class="logo"> <!-- To'liq manzilni kiritish -->
-                  <img src="{% static "images/logo.jpg" %}" alt="">
+                  <img src="{% static 'images/logo.jpg' %}" alt="">
               </a>
           </div>
 

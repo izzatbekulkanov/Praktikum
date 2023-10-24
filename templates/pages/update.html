@@ -4,75 +4,100 @@
 {% block content %}
 <head>
   <title>{% block title %}Update news{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/update_news.css' %}">
 </head>
-<!--<div id="preloader">-->
-<!--  <div id="status">&nbsp;</div>-->
-<!--</div>-->
+
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-<div class="container">
-
-  <section id="newsSection">
-    <div class="row">
-      <div class="col-lg-12 col-md-12">
-        <div class="latest_newsarea"> <span>Latest News</span>
-          <ul id="ticker01" class="news_sticker">
-            {% for news in allNews %}
-            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
-            {% endfor %}
-          </ul>
-          <div class="social_area">
-            <ul class="social_nav">
-              <li class="facebook"><a href="#"></a></li>
-              <li class="twitter"><a href="#"></a></li>
-              <li class="flickr"><a href="#"></a></li>
-              <li class="pinterest"><a href="#"></a></li>
-              <li class="googleplus"><a href="#"></a></li>
-              <li class="vimeo"><a href="#"></a></li>
-              <li class="youtube"><a href="#"></a></li>
-              <li class="mail"><a href="#"></a></li>
-            </ul>
-          </div>
-        </div>
+<section id="newsSection">
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="latest_newsarea"> <span>Latest News</span>
+      <ul id="ticker01" class="news_sticker">
+        {% for news in allNews %}
+        <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
+        {% endfor %}
+      </ul>
+      <div class="social_area">
+        <ul class="social_nav">
+          <li class="facebook"><a href="#"></a></li>
+          <li class="twitter"><a href="#"></a></li>
+          <li class="flickr"><a href="#"></a></li>
+          <li class="pinterest"><a href="#"></a></li>
+          <li class="googleplus"><a href="#"></a></li>
+          <li class="vimeo"><a href="#"></a></li>
+          <li class="youtube"><a href="#"></a></li>
+          <li class="mail"><a href="#"></a></li>
+        </ul>
       </div>
     </div>
-  </section>
-  <section id="contentSection">
-    <div class="row">
-      <div class="col-lg-8 col-md-8 col-sm-8">
-        <div class="left_content">
-            <!-- Bu yerga edit create delete kodlari yoziladi -->
-            <div class="contact_area">
-                <h2>Joriy yangilikni tahrirlash</h2>
-                <form method="post" class="needs-validation" novalidate>
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-info ml-2">Saqlash</button>
-                </form>
-
-            </div>
-
-            <!--/ Bu yerga edit create delete kodlari yoziladi -->
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <aside class="right_content">
-          <div class="single_sidebar">
-            <h2><span>{{news.category.name}} yangiliklari</span></h2>
-            <ul class="spost_nav">
-              {% for new in newsuz %}
-                  {% if new.category == news.category and new.id != news.id %}
-                      <li>
-                          <div class="media wow fadeInDown"> <a href="{{ new.get_absolute_url }}" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
-                              <div class="media-body"> <a href="{{ new.get_absolute_url }}" class="catg_title">{{ new.title }}</a> </div>
-                          </div>
-                      </li>
-                  {% endif %}
-              {% endfor %}
-            </ul>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
+  </div>
 </div>
+</section>
+<section id="contentSection">
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="left_content">
+        <!-- Bu yerga edit create delete kodlari yoziladi -->
+        <div class="contact_area">
+            <h2>Joriy yangilikni tahrirlash</h2>
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">Sarlavha:</label>
+                    <input type="text" name="title" id="{{ form.title.id_for_label }}" class="form-control" value="{{ form.title.value }}">
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.body.id_for_label }}">Matn:</label>
+                    <textarea name="body" id="{{ form.body.id_for_label }}" class="form-control h-50">{{ form.body.value }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.image.id_for_label }}">Rasm:</label>
+                    <div class="custom-file">
+                        <input type="file" name="image" id="{{ form.image.id_for_label }}" class="custom-file-input">
+                        <label class="custom-file-label" for="{{ form.image.id_for_label }}">Rasmni tanlang...</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}">Status:</label>
+                    <select id="{{ form.status.id_for_label }}" name="status" class="form-control">
+                        <option value="DF" {% if form.status.value == 'DF' %}selected{% endif %}>Draft</option>
+                            <option value="PB" {% if form.status.value == 'PB' %}selected{% endif %}>Published</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.category.id_for_label }}">Kategoriya:</label>
+                    <select id="{{ form.category.id_for_label }}" name="category" class="form-control">
+                        <option value="{{ form.category.value }}">{{ form.category.label }}</option>
+                            {% for category in form.category.field.queryset %}
+                                <option value="{{ category.pk }}" {% if category.pk == form.category.value %}selected{% endif %}>{{ category.name }}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-info ml-2">Saqlash</button>
+            </form>
+
+            
+        </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-4">
+    <aside class="right_content">
+      <div class="single_sidebar">
+        <h2><span>{{news.category.name}} yangiliklari</span></h2>
+        <ul class="spost_nav">
+          {% for new in newsuz %}
+              {% if new.category == news.category and new.id != news.id %}
+                  <li>
+                      <div class="media wow fadeInDown"> <a href="{{ new.get_absolute_url }}" class="media-left"> <img alt="" src="{{ new.image.url }}"> </a>
+                          <div class="media-body"> <a href="{{ new.get_absolute_url }}" class="catg_title">{{ new.title }}</a> </div>
+                      </div>
+                  </li>
+              {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+</section>
 {% endblock content %}
