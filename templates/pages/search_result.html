@@ -12,34 +12,35 @@
         <div class="row">
             <div class="col-md-11">
                 <div class="row text-center">
-                    <div class="col-md-8 offset-md-2">
-                        <h3>Qidiruv natijalari</h3>
+                    <div class="offset-md-2">
+                        <h3 class="text-center inline" style="border-bottom: solid 1px red">Qidiruv natijalari</h3>
                         <hr class="invisible small">
                     </div>
                     <div class="col-md-12">
                         <div class="v-heading-v2">
-                            <h4 class="v-search-result-count">About 18,580 results</h4>
+                            <h4 class="v-search-result-count">{{ num_results }} ta yangilik topildi</h4>
+                            <h4 class="v-search-result-count">"{{ query | upper}}" oid qidiruv natijalar</h4>
                         </div>
                     </div>
                 </div>
 
+                <!-- Pagination -->
                 <div class="clearfix mt-40">
                     <ul class="xsearch-items">
                         {% for result in results %}
+                        <!-- Barcha yangiliklar kiritilgan bo'lsa ularga o'zingiz qulayroq stilni qo'shing -->
                         <li class="search-item">
                             <div class="search-item-img">
-                                <a href="#">
+                                <a href="{% url 'Detail_page' result.slug %}">
                                     <img src="{{ result.image.url }}" width="70" height="70">
                                 </a>
                             </div>
                             <div class="search-item-content">
-                                <h3 class="search-item-caption"><a href="#">{{ result.title }}</a></h3>
+                                <h3 class="search-item-caption"><a href="{% url 'Detail_page' result.slug %}">{{ result.title }}</a></h3>
                                 <div class="search-item-meta mb-15">
                                     <ul class="list-inline">
                                         <li class="time">{{ result.published_time }}</li>
-                                        <li><a href="#">0 Comments</a></li>
-<!--                                        <li class="pr-0">in</li>-->
-<!--                                        <li class="pl-0"><a href="#">Design</a></li>-->
+                                        <li><a href="{% url 'Detail_page' result.slug %}">0 Comments</a></li>
                                     </ul>
                                 </div>
                                 <div>
@@ -50,26 +51,26 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="clearfix pl-90">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-double-left"></i> </a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">..</a></li>
-                                <li class="page-item"><a class="page-link" href="#">20</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-double-right"></i> </a></li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="clearfix pull-right">
-                            <span class="o-7">Page 1 of 8</span>
-                        </div>
-                    </div>
+                <!-- Pagination -->
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if news.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ news.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current-page">
+                            Sahifa {{ news.number }} / {{ news.paginator.num_pages }}
+                        </span>
+
+                        {% if news.has_next %}
+                            <a href="?page={{ news.next_page_number }}">next</a>
+                            <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
                 </div>
+
             </div>
         </div>
     </div>

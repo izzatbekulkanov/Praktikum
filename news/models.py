@@ -31,7 +31,6 @@ class News(models.Model):
                               choices=Status.choices,
                               default=Status.Draft
                               )
-    
     def save(self, *args, **kwargs):
         if not self.slug:  # Agar slug bo'sh bo'lsa
             self.slug = slugify(self.title)  # title dan slug yaratish

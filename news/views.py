@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact, News, Category, Comment
@@ -116,7 +118,22 @@ def delete_category(request, category_id):
         # Bunday kategoriya topilmadi
         pass
     return redirect('category_list')
+
 class SearchResultList(ListView):
     model = News
     template_name = 'pages/search_result.html'
     context_object_name = 'results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return News.objects.filter(
+            Q(title__icontains=query) | Q(body__icontains=query)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        results = context['results']
+        context['num_results'] = results.count()
+        context['query'] = query
+        return context
