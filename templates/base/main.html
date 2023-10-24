@@ -1,12 +1,13 @@
-
 {% extends 'base/base.html' %}
 {% load static %}
+{% load hitcount_tags %}
+{% load i18n %}
 
 {% block content %}
   <section id="newsSection ">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <div class="latest_newsarea"> <span>Latest News</span>
+        <div class="latest_newsarea"> <span>Oxirgi yangiliklar</span>
           <ul id="ticker01" class="news_sticker">
             {% for news in allNews %}
             <li><a href="{{news.get_absolute_url}}"><img src="{{ news.image.url }}" alt="">{{ news.title | truncatechars:12 }}</a></li>
@@ -44,7 +45,7 @@
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="latest_post">
-          <h2><span>Oxirgi yangiliklar</span></h2>
+          <h2><span>{% blocktrans %}Oxirgi yangiliklar{% endblocktrans %}</span></h2>
           <div class="latest_post_container">
 <!--            <div id="prev-button"><i class="fa fa-chevron-up"></i></div>-->
             <ul class="latest_postnav">
@@ -67,7 +68,7 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_post_content">
-            <h2><span>Sport yangiliklari</span></h2>
+            <h2><span>{% blocktrans %}Sport yangiliklari{% endblocktrans %}</span></h2>
             <div class="single_post_content_left">
               <ul class="business_catgnav  wow fadeInDown">
                 <li>
@@ -99,7 +100,7 @@
           <div class="fashion_technology_area">
             <div class="fashion">
               <div class="single_post_content">
-                <h2><span>Technologiya</span></h2>
+                <h2><span>{% blocktrans %}Technologiya{% endblocktrans %}</span></h2>
                 <ul class="business_catgnav wow fadeInDown">
                   <li>
                     {% for news in newsT %}
@@ -128,7 +129,7 @@
             </div>
             <div class="technology">
               <div class="single_post_content">
-                <h2><span>Xorij yangiliklari</span></h2>
+                <h2><span>{% blocktrans %}Xorij yangiliklari{% endblocktrans %}</span></h2>
                 <ul class="business_catgnav">
                   <li>
                     {% for news in newsX %}
@@ -183,7 +184,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Texnologiya yangiliklari</span></h2>
+            <h2><span>{% blocktrans %}Texnologiya yangiliklari{% endblocktrans %}</span></h2>
             <ul class="spost_nav ">
               {% for news in newsT %}
               <li>
@@ -197,8 +198,8 @@
           <div class="single_sidebar">
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
-              <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
-              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Comments</a></li>
+              <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">{% blocktrans %}Video{% endblocktrans %}</a></li>
+              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">{% blocktrans %} Izohlar {% endblocktrans %}</a></li>
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="category">
@@ -230,14 +231,14 @@
           <div class="single_sidebar wow fadeInDown">
             {% for news in allNews %}
             {% if forloop.first %}
-            <h2><span>Sponsor</span></h2>
+            <h2><span>{% blocktrans %} Videolar {% endblocktrans %}</span></h2>
             <a class="sideAdd" href="#"><img src="{{ news.image.url }}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
             <h2><span>{{ news.category }}</span></h2>
             {% endif %}
             {% endfor %}
             <select class="catgArchive">
-              <option>Select Category</option>
+              <option> {% blocktrans %} Select Category {% endblocktrans %}</option>
 
               {% for category in categories %}
               <option>{{ category.name }}</option>
@@ -246,7 +247,7 @@
             </select>
           </div>
           <div class="single_sidebar wow fadeInDown">
-            <h2><span>Links</span></h2>
+            <h2><span>{% blocktrans %} Havolalar {% endblocktrans %}</span></h2>
             <ul>
 
               {% for category in categories %}

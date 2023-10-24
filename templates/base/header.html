@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <head>
     <style>
 
@@ -60,19 +62,35 @@
         <div class="header_top">
           <div class="header_top_left">
             <ul class="top_nav">
-                <li><a href="{% url 'main' %}">Home</a></li>
+                <li><a href="{% url 'main' %}">{% blocktrans %}Uy{% endblocktrans %}</a></li>
                 {% if user.is_superuser %}
-                <li><a href="{% url 'create_page' %}">Create News</a></li>
+                <li><a href="{% url 'create_page' %}">{% blocktrans %}Yangilik qo'shish{% endblocktrans %}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-                <li><a href="{% url 'category_list' %}">Create Category</a></li>
+                <li><a href="{% url 'category_list' %}">{% blocktrans %}Kategoriya qo'shish{% endblocktrans %}</a></li>
                 {% endif %}
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'contact' %}">{% blocktrans %}Biz bilan bo'glanish{% endblocktrans %}</a></li>
                 <li>
                     <form method="get" action="{% url 'search' %}">
                         <input type="text" name="q" placeholder="Search">
 <!--                        <button type="submit">Search</button>-->
                     </form>
+                </li>
+                <li>
+                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}{% blocktrans %}Tanlangan{% endblocktrans %}{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Go">
+                </form>
                 </li>
             </ul>
           </div>
@@ -82,7 +100,7 @@
             {% if not user.is_authenticated %}
               <a href="{% url 'login' %}">
                   <button class="btn">
-                        Login or register
+                        {% blocktrans %}Kirish yoki ro'yhatdan o'tish{% endblocktrans %}
                     </button>
               </a>
 <!--            <p>-->
@@ -94,14 +112,14 @@
             {% if user.is_authenticated %}
               <a href="{% url 'logout' %}">
                   <button class="btn">
-                        Logout
+                        {% blocktrans %}Chiqish{% endblocktrans %}
                     </button>
               </a>
             {% endif %}
               {% if user.is_authenticated %}
               <a href="{% url 'dashboard' %}">
                   <button class="btn">
-                        Dashboard
+                        {% blocktrans %}Bosh profile{% endblocktrans %}
                     </button>
               </a>
             {% endif %}
@@ -133,7 +151,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav">
-            <li class="active"><a href="{% url 'main' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+            <li class="active"><a href="{% url 'main' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">{% blocktrans %}Uy{% endblocktrans %} </span></a></li>
             {% for category in categories %}
             <li class="{% if category.name == active_category %}active{% endif %}">
                 <a href="{% url 'category_detail' category_name=category.name %}">{{ category.name }}</a>

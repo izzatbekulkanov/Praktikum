@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from hitcount.utils import get_hitcount_model
+
 from .models import Contact, News, Category, Comment
 from .forms import ContactForm, CategoryForm, CommentForm
 from django.urls import reverse_lazy
@@ -38,10 +40,31 @@ def contact(request):
     }
     return render(request, 'pages/contact.html', context)
 
+from hitcount.views import HitCountDetailView, HitCountMixin
+
+
+class PostCountHitDetailView(HitCountDetailView):
+    model = News
+    count_hit = True
 
 def custom_detail_view(request, slug):
     news = get_object_or_404(News, slug=slug)
+    context = {}
+    #hitcount logikasi
+    hit_count = get_hitcount_model().objects.get_for_object(news)
+    hits = hit_count.hits
+    hitcontext = context['hitcount'] = {'pk': hit_count.pk}
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    if hit_count_response.hit_counted:
+        hits = hits + 1
+        hitcontext['hit_counted'] = hit_count_response.hit_counted
+        hitcontext['hit_counted'] = hit_count_response.hit_message
+        hitcontext['total_hits'] = hits
+
+
+
     comments = news.comments.filter(active=True)
+    comment_count = comments.count()
     new_comment = None
 
     if request.method == 'POST':
@@ -63,6 +86,7 @@ def custom_detail_view(request, slug):
         'comments': comments,
         'new_comment': new_comment,
         'comment_form': comment_form,
+        'comment_count': comment_count
     }
 
     return render(request, 'pages/detail_page.html', context)
@@ -86,7 +110,11 @@ class CreateView(OnlyLoggedSuperUser, CreateView):
     model = News
     template_name = 'pages/create.html'
     context_object_name = 'news'
-    fields = ('title', 'body', 'image', 'status', 'category')
+    fields = ('title', 'title_uz', 'title_en', 'title_ru',
+               'body', 'body_uz','body_en', 'body_ru',
+              'image', 'status', 'category',
+              )
+
     def form_valid(self, form):
         news = form.save(commit=False)
         news.slug = slugify(news.title)
@@ -123,6 +151,7 @@ class SearchResultList(ListView):
     model = News
     template_name = 'pages/search_result.html'
     context_object_name = 'results'
+    paginate_by = 5  # Sahifada necha element ko'rsatishni tanlash
 
     def get_queryset(self):
         query = self.request.GET.get('q')

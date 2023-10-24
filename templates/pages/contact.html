@@ -16,7 +16,7 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="contact_area">
-            <h2>Contact Us</h2>
+            <h2>{% blocktrans %}Biz bilan boglanish{% endblocktrans %}</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tipisicing elit, sed do.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             <form action="#" class="contact_form" method="POST">
                 {% csrf_token %}
@@ -31,7 +31,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Mashxur yangiliklar</span></h2>
+            <h2><span>{% blocktrans %}Mashxur yangiliklar{% endblocktrans %}</span></h2>
             <ul class="spost_nav">
               {% for image in allNews %}
               <li>

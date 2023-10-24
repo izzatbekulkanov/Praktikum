@@ -14,6 +14,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
+class PublishedManager:
+    pass
+
+
 class News(models.Model):
     class Status(models.TextChoices):
         Draft = 'DF', 'Draft'
@@ -31,6 +36,9 @@ class News(models.Model):
                               choices=Status.choices,
                               default=Status.Draft
                               )
+    objects = models.Manager()
+    published = PublishedManager()
+
     def save(self, *args, **kwargs):
         if not self.slug:  # Agar slug bo'sh bo'lsa
             self.slug = slugify(self.title)  # title dan slug yaratish

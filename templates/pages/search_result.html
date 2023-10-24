@@ -24,7 +24,6 @@
                     </div>
                 </div>
 
-                <!-- Pagination -->
                 <div class="clearfix mt-40">
                     <ul class="xsearch-items">
                         {% for result in results %}
@@ -51,26 +50,21 @@
                         {% endfor %}
                     </ul>
                 </div>
-
-                <!-- Pagination -->
-                <div class="pagination">
+               <div class="pagination">
                     <span class="step-links">
-                        {% if news.has_previous %}
-                            <a href="?page=1">&laquo; first</a>
-                            <a href="?page={{ news.previous_page_number }}">previous</a>
+                        {% if results.has_previous %}
+                            <a href="?q={{ query }}&page={{ results.previous_page_number }}">oldingi</a>
                         {% endif %}
 
                         <span class="current-page">
-                            Sahifa {{ news.number }} / {{ news.paginator.num_pages }}
+                            Sahifa {{ results.number }} / {{ results.paginator.num_pages }}.
                         </span>
 
-                        {% if news.has_next %}
-                            <a href="?page={{ news.next_page_number }}">next</a>
-                            <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
+                        {% if results.has_next %}
+                            <a href="?q={{ query }}&page={{ results.next_page_number }}">keyingi</a>
                         {% endif %}
                     </span>
                 </div>
-
             </div>
         </div>
     </div>

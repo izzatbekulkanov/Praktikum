@@ -13,7 +13,7 @@
   <section id="newsSection">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <div class="latest_newsarea"> <span>Latest News</span>
+        <div class="latest_newsarea"> <span>{% blocktrans %}Oxirgi yangiliklar{% endblocktrans %}</span>
           <ul id="ticker01" class="news_sticker">
             {% for news in allNews %}
             <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title }}</a></li>
@@ -40,27 +40,27 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
             <div class="single_sidebar">
-            <h2><span>Category List</span></h2>
+            <h2><span>{% blocktrans %}Kategoriya ro'yhati{% endblocktrans %}</span></h2>
                 <ul class="list-group">
                     {% for category in categories %}
                         <li class="list-group-item flex justify-content-between align-items-center">
                             {{ category.name }}
                             <span class="d-flex">
-                                <a href="{% url 'delete_category' category.id %}" class="btn btn-danger text-cyan text-center">Delete</a>
+                                <a href="{% url 'delete_category' category.id %}" class="btn btn-danger text-cyan text-center">{% blocktrans %}O'chirish{% endblocktrans %}</a>
                             </span>
                         </li>
                     {% endfor %}
                 </ul>
                 </div>
             <div class="single_sidebar">
-                <h2><span>Add category</span></h2>
+                <h2><span>{% blocktrans %}Yangi kategoriya qo'shish{% endblocktrans %}</span></h2>
                 <form method="post" class="my-3">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="{{ form.name.id }}">Category Name</label>
+                        <label for="{{ form.name.id }}">{% blocktrans %}Kategoriya nomi{% endblocktrans %}</label>
                         <input type="text" class="form-control" id="{{ form.name.id }}" name="{{ form.name.name }}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Category</button>
+                    <button type="submit" class="btn btn-primary">{% endblocktrans %}Qo'shish{% endblocktrans %}</button>
                 </form>
             </div>
         </div>
@@ -68,7 +68,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Popular Post</span></h2>
+            <h2><span>{% blocktrans %}Mashhur yangiliklar{% endblocktrans %}</span></h2>
             <ul class="spost_nav">
               {% for news in allNews %}
               {% if forloop.counter <= 4 %}
