@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'news',
     'hitcount',
-    'modeltranslation'
+    'modeltranslation',
+    'whitenoise',
 ]
 
 
@@ -144,6 +145,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = 'meida/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+#
+# STATIC_URL = 'static/'
+# STATIC_ROOT = '/home/s240806/iulkanov.uz/dj/static'
+# STATICFILES_DIRS = ('/home/s240806/iulkanov.uz/dj/static_files', )
+# MEDIA_URL = '/uploads/'
+# MEDIA_ROOT = '/home/s240806/iulkanov.uz/dj/uploads'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
