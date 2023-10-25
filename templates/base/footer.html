@@ -1,9 +1,11 @@
+{% load i18n %}
 <footer id="footer">
     <div class="footer_top">
       <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInLeftBig">
             <h2>{% blocktrans %}Istisno rasm{% endblocktrans %}</h2>
+            <img src="{{ request.user.profile.image.url }}" style="width: 220px" alt="So'rov yuborayotgan foydalanuvchining rasmi">
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">

@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <head>
@@ -60,7 +61,7 @@
                         <label for="{{ form.name.id }}">{% blocktrans %}Kategoriya nomi{% endblocktrans %}</label>
                         <input type="text" class="form-control" id="{{ form.name.id }}" name="{{ form.name.name }}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">{% endblocktrans %}Qo'shish{% endblocktrans %}</button>
+                    <button type="submit" class="btn btn-primary">{% blocktrans %}Qo'shish{% endblocktrans %}</button>
                 </form>
             </div>
         </div>
