@@ -1,99 +1,152 @@
 {% load static %}
 {% load i18n %}
+
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+
+        .btn {
+          font-size: 17px;
+          background: transparent;
+          border: none;
+          padding: 1em 1.5em;
+          color: #ffedd3;
+          text-transform: uppercase;
+          position: relative;
+          transition: .5s ease;
+          cursor: pointer;
+        }
+
+        .btn::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 2px;
+          width: 0;
+          background-color: #ffc506;
+          transition: .5s ease;
+        }
+
+        .btn:hover {
+          color: #1e1e2b;
+          transition-delay: .5s;
+        }
+
+        .btn:hover::before {
+          width: 100%;
+        }
+
+        .btn::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 0;
+          width: 100%;
+          background-color: #ffc506;
+          transition: .4s ease;
+          z-index: -1;
+        }
+
+        .btn:hover::after {
+          height: 100%;
+          transition-delay: 0.4s;
+          color: aliceblue;
+        }
+    </style>
 </head>
 <header id="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="header_top d-flex justify-content-center align-items-center">
-                    <div class="center-block">
-                        <ul class="top_nav ">
-                            <li class="mr-3"><a href="{% url 'main' %}">{% blocktrans %}Uy{% endblocktrans %}</a></li>
-                            {% if user.is_superuser %}
-                            <li class="mr-1"><a href="{% url 'create_page' %}">{% blocktrans %}Yangilik qo'shish{% endblocktrans %}</a></li>
-                            {% endif %}
-                            {% if user.is_superuser %}
-                            <li class="mr-1"><a href="{% url 'category_list' %}">{% blocktrans %}Kategoriya qo'shish{% endblocktrans %}</a></li>
-                            {% endif %}
-                            <li class="mr-1"><a href="{% url 'contact' %}">{% blocktrans %}Biz bilan bo'glanish{% endblocktrans %}</a></li>
-                            <li class="mr-1">
-                                {% if not user.is_authenticated %}
-                                    <a href="{% url 'login' %}">{% blocktrans %}Kirish yoki ro'yhatdan o'tish{% endblocktrans %}</a>
-                                {% endif %}
-                                {% if user.is_authenticated %}
-                                    <a href="{% url 'logout' %}">{% blocktrans %}Chiqish{% endblocktrans %}</a>
-                                {% endif %}
-                                {% if user.is_authenticated %}
-                                    <a href="{% url 'dashboard' %}">{% blocktrans %}Bosh profile{% endblocktrans %}</a>
-                                {% endif %}
-                            </li>
-                            <li class="mr-1">
-                                <form method="get" action="{% url 'search' %}" class="form-inline">
-                                    <input type="text" name="q" class="form-control" placeholder="Search">
-                                    <button type="submit" class="btn btn-primary">Search</button>
-                                </form>
-                            </li>
-                            <li>
-                                <form action="{% url 'set_language' %}" method="post" class="form-inline">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ redirect_to }}">
-                                    <select name="language" class="custom-select">
-                                        {% get_current_language as LANGUAGE_CODE %}
-                                        {% get_available_languages as LANGUAGES %}
-                                        {% get_language_info_list for LANGUAGES as languages %}
-                                        {% for language in languages %}
-                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                                {{ language.name_local }} ({{ language.code }})
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                    <button type="submit" class="btn btn-primary">Go</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-<!--                    <div class="header_top_right">-->
-<!--                        <p>{{ now|date:"jS F Y H:i" }}</p>-->
-<!--                        {% if not user.is_authenticated %}-->
-<!--                        <a href="{% url 'login' %}" class="btn btn-primary mr-2">-->
-<!--                            {% blocktrans %}Kirish yoki ro'yhatdan o'tish{% endblocktrans %}-->
-<!--                        </a>-->
-<!--                        {% endif %}-->
-<!--                        {% if user.is_authenticated %}-->
-<!--                        <a href="{% url 'logout' %}" class="btn btn-primary mr-2">-->
-<!--                            {% blocktrans %}Chiqish{% endblocktrans %}-->
-<!--                        </a>-->
-<!--                        {% endif %}-->
-<!--                        {% if user.is_authenticated %}-->
-<!--                        <a href="{% url 'dashboard' %}" class="btn btn-primary">-->
-<!--                            {% blocktrans %}Bosh profile{% endblocktrans %}-->
-<!--                        </a>-->
-<!--                        {% endif %}-->
-<!--                    </div>-->
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="header_bottom">
-                    <div class="logo_area">
-                        <a href="/full/path/to/base.html" class="logo">
-                            <img src="{% static 'images/logo.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="add_banner">
-                        <a href="/yangi-sahifa/">
-                            <img src="{% static 'images/Ulkanov_CROW2.png' %}" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_top">
+          <div class="header_top_left">
+            <ul class="top_nav">
+                <li><a href="{% url 'main' %}">{% blocktrans %}Uy{% endblocktrans %}</a></li>
+                {% if user.is_superuser %}
+                <li><a href="{% url 'create_page' %}">{% blocktrans %}Yangilik qo'shish{% endblocktrans %}</a></li>
+                {% endif %}
+                {% if user.is_superuser %}
+                <li><a href="{% url 'category_list' %}">{% blocktrans %}Kategoriya qo'shish{% endblocktrans %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'contact' %}">{% blocktrans %}Biz bilan bo'glanish{% endblocktrans %}</a></li>
+                <li>
+                    <form method="get" action="{% url 'search' %}">
+                        <input type="text" name="q" placeholder="Search">
+<!--                        <button type="submit">Search</button>-->
+                    </form>
+                </li>
+                <li>
+                    <form action="{% url 'set_language' %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}">
+                        <select name="language" class="custom-select mr-1">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}{% blocktrans %}Tanlangan{% endblocktrans %}{% endif %}>
+                                    {{ language.name_local }} ({{ language.code }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">{% blocktrans %}O'zgartirish{% endblocktrans %}</button>
+                    </form>
 
+                </li>
+
+            </ul>
+          </div>
+          <div class="header_top_right">
+            <p>{% now "jS F Y H:i" %}</p>
+
+            {% if not user.is_authenticated %}
+              <a href="{% url 'login' %}">
+                  <button class="btn">
+                        {% blocktrans %}Kirish yoki ro'yhatdan o'tish{% endblocktrans %}
+                    </button>
+              </a>
+<!--            <p>-->
+<!--              <a href="#">-->
+<!--                  <p class="btn btn-success mt-2">Register</p>-->
+<!--              </a>-->
+<!--            </p>-->
+            {% endif %}
+            {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}">
+                  <button class="btn">
+                        {% blocktrans %}Chiqish{% endblocktrans %}
+                    </button>
+              </a>
+            {% endif %}
+              {% if user.is_authenticated %}
+              <a href="{% url 'dashboard' %}">
+                  <button class="btn">
+                        {% blocktrans %}Bosh profile{% endblocktrans %}
+                    </button>
+              </a>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_bottom">
+          <div class="logo_area">
+              <a href="/full/path/to/base.html" class="logo"> <!-- To'liq manzilni kiritish -->
+                  <img src="{% static 'images/logo.jpg' %}" alt="">
+              </a>
+          </div>
+
+          <div class="add_banner">
+              <a href="/yangi-sahifa/"> <!-- Sahifani URL manzili -->
+                  <img src="{% static 'images/Ulkanov_CROW2.png' %}" alt="">
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
   <section id="navArea">
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
