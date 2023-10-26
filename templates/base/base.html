@@ -65,7 +65,20 @@ document.querySelector('input[type="file"]').addEventListener('change', function
     label.textContent = fileName;
 });
 </script>
+<script>
+$(document).ready(function() {
+    $(".selected-option").on("click", function() {
+        $(".dropdown-options").slideToggle();
+    });
 
+    $(".option").on("click", function() {
+        var selectedValue = $(this).data("value");
+        $(".selected-option").html($(this).html());
+        $("select[name='language']").val(selectedValue);
+        $(".dropdown-options").slideUp();
+    });
+});
+</script>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/wow.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
