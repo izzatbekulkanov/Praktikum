@@ -1,7 +1,7 @@
 
 {
   "builds": [{
-    "src": "setting/wsgi.py",
+    "src": "build/*", "use": "@vercel/static",
     "use": "@vercel/python",
     "config": { "maxLambdaSize": "400mb", "runtime": "python3.10.12"}
   }],
@@ -12,6 +12,3 @@
     }
   ]
 }
-// "builds": [
-//   { "src": "build/*", "use": "@vercel/static" }
-// ]
