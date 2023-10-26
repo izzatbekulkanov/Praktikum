@@ -1,12 +1,10 @@
-// "builds": [
-//   { "src": "build/*", "use": "@vercel/static" }
-// ]
 {
-  "builds": [{
-    "src": "setting/wsgi.py",
-    "use": "@vercel/python",
-    "config": { "maxLambdaSize": "400mb", "runtime": "python3.10.12"}
-  }],
+  "builds": [
+    {
+      "src": "setting/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
