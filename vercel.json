@@ -1,6 +1,4 @@
-// "builds": [
-//   { "src": "build/*", "use": "@vercel/static" }
-// ]
+
 {
   "builds": [{
     "src": "setting/wsgi.py",
@@ -14,3 +12,6 @@
     }
   ]
 }
+// "builds": [
+//   { "src": "build/*", "use": "@vercel/static" }
+// ]
